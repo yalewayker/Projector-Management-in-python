@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU-Projector</title>
+</head>
+<body>
+    <h1>Projector Admin</h1>
+
+    <form action="{{ url_for('submit') }}" method="post">
+        <div>
+            <label for="projector_id">Projector Id</label>
+            <input type="text" id="projector_id" name="projector_id" placeholder="Enter Projector Id" required>
+        </div>
+        <div>
+            <label for="teacher_id">Teacher Id</label>
+            <input type="text" id="teacher_id" name="teacher_id" placeholder="Enter Teacher Id" required>
+        </div>
+        <div>
+            <label for="date">Date</label>
+            <input type="datetime-local" id="date" name="date" placeholder="Enter datetime-local" required>
+        </div>
+        <div>
+            <label for="phone">Phone Number</label>
+            <input type="tel" name="phone" inputmode="numeric" pattern="[0-9]*" placeholder="Enter phone number" required>
+        </div>
+        <div>
+            <input type="submit" value="submit">
+        </div>
+    </form>
+
+    {% if bookings %}
+        <h2>Submitted Data:</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Projector ID</th>
+                    <th>Teacher ID</th>
+                    <th>Date</th>
+                    <th>Phone</th>
+                    <th>Return</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.projector_id }}</td>
+                        <td>{{ booking.teacher_id }}</td>
+                        <td>{{ booking.date }}</td>
+                        <td>{{ booking.phone }}</td>
+                        <td>
+                            <form action="{{ url_for('return_projector') }}" method="post" class="returnForm">
+                                <input type="hidden" name="return_teacher_id" value="{{ booking.teacher_id }}">
+                                <input type="submit" value="Return Projector">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    
+</body>
+</html>
