@@ -4,36 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HU-Projector</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Projector Admin</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Projector Admin</h1>
+        <form action="{{ url_for('submit') }}" method="post">
+            <div class="form-group">
+                <label for="projector_id">Projector Id</label>
+                <input type="text" class="form-control" id="projector_id" name="projector_id" placeholder="Enter Projector Id" required>
+            </div>
+            <div class="form-group">
+                <label for="teacher_id">Teacher Id</label>
+                <input type="text" class="form-control" id="teacher_id" name="teacher_id" placeholder="Enter Teacher Id" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="datetime-local" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" name="phone" inputmode="numeric" pattern="[0-9]*" placeholder="Enter phone number" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
-    <form action="{{ url_for('submit') }}" method="post">
-        <div>
-            <label for="projector_id">Projector Id</label>
-            <input type="text" id="projector_id" name="projector_id" placeholder="Enter Projector Id" required>
-        </div>
-        <div>
-            <label for="teacher_id">Teacher Id</label>
-            <input type="text" id="teacher_id" name="teacher_id" placeholder="Enter Teacher Id" required>
-        </div>
-        <div>
-            <label for="date">Date</label>
-            <input type="datetime-local" id="date" name="date" placeholder="Enter datetime-local" required>
-        </div>
-        <div>
-            <label for="phone">Phone Number</label>
-            <input type="tel" name="phone" inputmode="numeric" pattern="[0-9]*" placeholder="Enter phone number" required>
-        </div>
-        <div>
-            <input type="submit" value="submit">
-        </div>
-    </form>
-
-    {% if bookings %}
-        <h2>Submitted Data:</h2>
-        <table border="1">
-            <thead>
+        {% if bookings %}
+        <h2 class="mt-5">Submitted Data:</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Projector ID</th>
                     <th>Teacher ID</th>
@@ -52,15 +51,14 @@
                         <td>
                             <form action="{{ url_for('return_projector') }}" method="post" class="returnForm">
                                 <input type="hidden" name="return_teacher_id" value="{{ booking.teacher_id }}">
-                                <input type="submit" value="Return Projector">
+                                <button type="submit" class="btn btn-danger">Return Projector</button>
                             </form>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {% endif %}
-
-    
+        {% endif %}
+    </div>
 </body>
 </html>
